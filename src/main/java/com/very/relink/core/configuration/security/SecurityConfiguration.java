@@ -37,7 +37,7 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/docs/ncp-api.json",
             "/actuator/**",
-            "/api/auth/social/login"
+            "/api/v1/auth/social/login"
 
     };
 
