@@ -31,7 +31,6 @@ import lombok.experimental.SuperBuilder;
                 )
         }
 )
-@Table(name = "members")
 public class MemberJpaEntity extends BaseEntity {
 
     @Id

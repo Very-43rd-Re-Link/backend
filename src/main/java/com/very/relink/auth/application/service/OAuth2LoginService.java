@@ -1,9 +1,9 @@
 package com.very.relink.auth.application.service;
 
+import com.very.relink.auth.application.command.OAuth2LoginCommand;
 import com.very.relink.auth.application.port.in.OAuth2LoginUseCase;
 import com.very.relink.auth.application.port.out.TokenIssuePort;
 import com.very.relink.auth.application.result.OAuth2LoginResult;
-import com.very.relink.auth.application.command.OAuth2LoginCommand;
 import com.very.relink.auth.domain.token.AuthTokens;
 import com.very.relink.auth.exception.AuthErrorCode;
 import com.very.relink.member.application.port.out.LoadMemberPort;
@@ -24,18 +24,22 @@ public class OAuth2LoginService implements OAuth2LoginUseCase {
     @Override
     @Transactional
     public OAuth2LoginResult login(OAuth2LoginCommand oAuth2LoginCommand) {
-        String email = oAuth2LoginCommand.email();
-        if(email == null || email.isEmpty()) {
-            throw AuthErrorCode.OAUTH2_EMAIL_NOT_FOUND.toException();
+        String providerId = oAuth2LoginCommand.providerId();
+        if (providerId == null || providerId.isEmpty()) {
+            throw AuthErrorCode.OAUTH2_LOGIN_FAILED.toException();
         }
 
-        Member member = loadMemberPort.findByEmail(email)
+        Member member = loadMemberPort.findByProviderAndProviderId(
+                        oAuth2LoginCommand.provider(),
+                        providerId
+                )
                 .orElseGet(() -> saveMemberPort.save(
                         Member.create(
-                                email,
+                                oAuth2LoginCommand.email(),
                                 oAuth2LoginCommand.name(),
                                 oAuth2LoginCommand.imageUrl(),
-                                oAuth2LoginCommand.provider()
+                                oAuth2LoginCommand.provider(),
+                                providerId
                         )
                 ));
 
