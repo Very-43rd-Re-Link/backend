@@ -30,6 +30,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuth2LoginResult loginResult = oAuth2LoginUseCase.login(new OAuth2LoginCommand(
                 oAuth2Provider,
+                oAuth2UserInfo.getProviderId(),
                 oAuth2UserInfo.getEmail(),
                 oAuth2UserInfo.getName(),
                 oAuth2UserInfo.getImageUrl()
