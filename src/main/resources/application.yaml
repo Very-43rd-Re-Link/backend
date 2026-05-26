@@ -7,8 +7,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DB_URL:jdbc:mysql://localhost:3306/relink?serverTimezone=Asia/Seoul&characterEncoding=UTF-8}
-    username: ${DB_USER_NAME:ssafy}
-    password: ${DB_PASSWORD:ssafy}
+    username: ${DB_USER_NAME:root}
+    password: ${DB_PASSWORD:1234}
 
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -80,3 +80,8 @@ cors:
 social:
   kakao:
     user-info-uri: https://kapi.kakao.com/v2/user/me
+  google:
+    client-ids:
+      web: ${GOOGLE_CLIENT_ID_WEB}
+      android: ${GOOGLE_CLIENT_ID_ANDROID}
+      ios: ${GOOGLE_CLIENT_ID_IOS}
